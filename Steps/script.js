@@ -1,51 +1,9 @@
-const progress = document.getElementById("progress");
-const prev = document.getElementById("prev");
-const next = document.getElementById("next");
-const circles = document.querySelectorAll(".circle");
+const open = document.getElementById("open");
+const close = document.getElementById("close");
+const container = document.querySelector(".container");
 
-let currentActive = 1
+open.addEventListener("click", () => container.classList.add("show-nav"))
+close.addEventListener("click", () => container.classList.remove("show-nav"))
 
-next.addEventListener("click", () => {
-    currentActive++
 
-    /* To prevent from going above the number of items in the node list */
-    if (currentActive > circles.length) {
-        currentActive = circles.length
-    }
 
-    update()
-})
-
-prev.addEventListener("click", () => {
-    currentActive--
-
-    if (currentActive < 1) {
-        currentActive = 1
-    }
-
-    update()
-})
-
-function update() {
-    //Adds a class of "active" to the circle as the progress develops
-    circles.forEach((circle, index) => {
-        if (index < currentActive) {
-            circle.classList.add("active")
-        } else {
-            circle.classList.remove("active")
-        }
-    })
-
-    const actives = document.querySelectorAll(".active")
-
-    progress.style.width = ((actives.length - 1) / (circles.length - 1)) * 100 + "%"
-
-    if (currentActive === 1) {
-        prev.disabled = true
-    } else if (currentActive === circles.length) {
-        next.disabled = true
-    } else {
-        prev.disabled = false
-        next.disabled = false
-    }
-}
